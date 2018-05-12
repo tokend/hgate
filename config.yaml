@@ -1,0 +1,4 @@
+port: 8844 # port to where will listen
+log_level: debug # level of log output
+horizon_url: https://invest.swarm.fund/_/api # url of Horizon API
+seed: SBU72E4TBLKWB3PRU2GLELZEVXGIKVWHXCWQV353SPG2OAQYHKDFJ26R #your SecretSeed

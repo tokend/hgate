@@ -1,0 +1,7 @@
+bin/*
+pkg/*
+vendor/src/*
+vendor/pkg/*
+*.cfg
+*.json
+.idea/
