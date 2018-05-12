@@ -3,7 +3,7 @@ package config
 import (
 	"errors"
 	"gitlab.com/distributed_lab/logan/v3"
-	"gitlab.com/swarmfund/go/keypair"
+	"gitlab.com/tokend/go/keypair"
 	"gopkg.in/yaml.v2"
 	"io/ioutil"
 	"net/url"

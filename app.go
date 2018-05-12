@@ -3,7 +3,7 @@ package hgate
 import (
 	"gitlab.com/tokend/hgate/config"
 	"gitlab.com/tokend/hgate/server"
-	"gitlab.com/swarmfund/go/signcontrol"
+	"gitlab.com/tokend/go/signcontrol"
 	"fmt"
 	"gitlab.com/distributed_lab/logan/v3"
 	"log"
