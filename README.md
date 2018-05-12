@@ -4,9 +4,10 @@ This is a proxy for interaction with the TokenD based systems, which performs th
 
 ## Install
 
-1. Install https://github.com/golang/go/wiki/Ubuntu
-2. Run `go get gitlab.com/tokend/hgate`
-3. Run `go install gitlab.com/tokend/hgate/...`
+1. Install golang (https://github.com/golang/go/wiki/Ubuntu)
+1. Setup GOPATH (https://github.com/golang/go/wiki/SettingGOPATH)
+1. Clone hgate (Run `go get gitlab.com/tokend/hgate`)
+1. Build hgate (Run `go install gitlab.com/tokend/hgate/...`)
 
 ## Usage
 
