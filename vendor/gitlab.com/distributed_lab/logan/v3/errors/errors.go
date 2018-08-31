@@ -7,7 +7,7 @@ import (
 )
 
 const (
-	unknownStack = "unknown"
+	UnknownStack = "unknown"
 )
 
 // FromPanic extracts the err from the result of a recover() call.
@@ -16,6 +16,11 @@ func FromPanic(rec interface{}) error {
 	err, ok := rec.(error)
 	if !ok {
 		err = errors.Errorf("%s", rec)
+	}
+
+	if stack := GetStack(err); stack == UnknownStack {
+		// No stack is connected to the error from recover
+		err = errors.WithStack(err)
 	}
 
 	return err
@@ -138,7 +143,7 @@ func GetFields(err error) map[string]interface{} {
 // then from causer of its cause, and so one.
 //
 // If no stack was provided by any of the causers,
-// the value of `unknownStack` const will be returned.
+// the value of `UnknownStack` const will be returned.
 func GetStack(err error) string {
 	type causer interface {
 		Cause() error
@@ -146,7 +151,7 @@ func GetStack(err error) string {
 
 	for err != nil {
 		stack := getErrorStack(err)
-		if stack != unknownStack {
+		if stack != UnknownStack {
 			return stack
 		}
 
@@ -157,7 +162,7 @@ func GetStack(err error) string {
 		err = cause.Cause()
 	}
 
-	return unknownStack
+	return UnknownStack
 }
 
 // GetErrorStack returns the stack, as a string, if one can be extracted from `err`.
@@ -192,7 +197,7 @@ func getErrorStack(err error) string {
 		return string(s.Stack())
 	}
 
-	return unknownStack
+	return UnknownStack
 }
 
 type withFields struct {

@@ -40,6 +40,8 @@ func (e *Entry) Level(level Level) *Entry {
 	logger := copyLogger(e.entry.Logger)
 	logger.Level = logrus.Level(level)
 
+	e.entry.Logger = logger
+
 	return &Entry{
 		logrus.NewEntry(logger).WithField("pid", os.Getpid()),
 	}

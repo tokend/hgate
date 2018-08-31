@@ -1,4 +1,17 @@
-port: 8844 # port to where will listen
-log_level: debug # level of log output
-horizon_url: https://invest.swarm.fund/_/api # url of Horizon API
-seed: SBU72E4TBLKWB3PRU2GLELZEVXGIKVWHXCWQV353SPG2OAQYHKDFJ26R #your SecretSeed
+# "log" entry is used to configure logger output
+log:
+  # "level" makes logger output only important messages
+  level: debug # may be "debug", "info", "warn", "error"
+
+# "http" entry is responsible for what port should Hgate listen
+http:
+  host: localhost
+  port: 8844
+
+# "horizon" entry must contain some valid Horizon API URL
+horizon:
+  url: http://...
+
+# "signer" is a seed of some valid account
+keypair:
+  signer: S...

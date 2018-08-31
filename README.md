@@ -1,32 +1,60 @@
-# hgate
+# Hgate User Documentation
 
-This is a proxy for interaction with the TokenD based systems, which performs the signature of the request headers for authentication.
 
-## Install
+## Hgate Description
 
-1. Install golang (https://github.com/golang/go/wiki/Ubuntu)
-1. Setup GOPATH (https://github.com/golang/go/wiki/SettingGOPATH)
-1. Clone hgate (Run `go get gitlab.com/tokend/hgate`)
-1. Build hgate (Run `go install gitlab.com/tokend/hgate/...`)
+The purpose of hgate is to send signed requests to Horizon.
+
+## Setup
+
+Assuming the user has working Golang-setup, the installation process is as simple as:
+
+```sh
+go get gitlab.com/tokend/hgate
+go install gitlab.com/tokend/hgate/...
+```
+
+Before starting the Hgate, the user should provide a configuration file in order to make Hgate work properly. Example configuration file is called `config.yaml` and can be found in the root directory of Hgate repo.
+
+Assuming the user has created a config called `local-config.yaml`, he can launch the Hgate server in the following way:
+
+```bash
+./hgate --config="local-config.yaml"
+```
+
+If `config` argument is not provided Hgate looks for `config.yaml` file by default.
 
 ## Usage
 
-Run the hgate executable with argument `serve` to start proxy:
+Currently the user can submit 2 kind of operations by sending HTTP requests to Hgate. If the user sends another request, then Hgate works as a proxy to Horizon.
 
-```bash
-./hgate serve
+```
+POST http://hgateurl/create_kyc_request
+```
+```json
+{
+	"request_id": 0,
+	"account_to_update_kyc": "G...",
+	"account_type_to_set": "general",
+	"kyc_level_to_set": 0,
+	"kyc_data": "{\"version\":\"v2\",\"v2\":{\"id_document_type\":\"passport\",\"documents\":{\"kyc_poa\":{\"front\":{\"key\":\"...\"}},\"kyc_selfie\":{\"front\":{\"key\":\"...\"}},\"kyc_id_document\":{\"front\":{\"key\":\"...\"},\"type\":\"passport\"}},\"first_name\":\"John\",\"last_name\":\"Doe\",\"address\":{\"line_1\":\"l1\",\"line_2\":\"l2\",\"city\":\"New York\",\"country\":\"USA\",\"state\":\"CA\",\"postal_code\":\"123\"},\"date_of_birth\":\"2018-04-01T00:00:00+03:00\",\"id_expiration_date\":\"2018-04-30T00:00:00+03:00\"}}\r\n",
+	"all_tasks": 2
+}
 ```
 
-Additional option:
-
-- `--config [path/to/config] or -c [path/to/config]` default: "./config.yaml"
-
-## Config
-Config is a file in [YAML](https://en.wikipedia.org/wiki/YAML) format.
-
-```yaml
-port: 8842   #port where hgate will listen
-log_level: warn   #level of log output
-horizon_url: http://128.199.229.140:8011    #url of Horizon API
-seed: SADB...   #your SecretSeed
 ```
+PATCH http://hgateurl/assets/USD
+```
+```json
+{
+		"policies": 1,
+		"details":  {
+			"external_system_type": "12",
+			"name": ""
+		}
+}
+```
+
+```GET http://hgateurl/assets/```
+
+```GET http://hgateurl/accounts/```
