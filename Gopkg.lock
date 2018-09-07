@@ -3,91 +3,363 @@
 
 [[projects]]
   branch = "master"
+  digest = "1:47ea4fbe2ab4aeb9808502c51e657041c2e49b36b83fc1c1a349135cdf16342f"
   name = "github.com/agl/ed25519"
   packages = [
     ".",
-    "edwards25519"
+    "edwards25519",
   ]
+  pruneopts = "UT"
   revision = "5312a61534124124185d41f09206b9fef1d88403"
 
 [[projects]]
-  name = "github.com/go-errors/errors"
+  digest = "1:fed1f537c2f1269fe475a8556c393fe466641682d73ef8fd0491cd3aa1e47bad"
+  name = "github.com/certifi/gocertifi"
   packages = ["."]
-  revision = "a6af135bd4e28680facf08a3d206b454abc877a4"
-  version = "v1.0.1"
+  pruneopts = "UT"
+  revision = "deb3ae2ef2610fde3330947281941c562861188b"
+  version = "2018.01.18"
+
+[[projects]]
+  digest = "1:abeb38ade3f32a92943e5be54f55ed6d6e3b6602761d74b4aab4c9dd45c18abd"
+  name = "github.com/fsnotify/fsnotify"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "c2828203cd70a50dcccfb2761f8b1f8ceef9a8e9"
+  version = "v1.4.7"
 
 [[projects]]
   branch = "master"
-  name = "github.com/nullstyle/go-xdr"
-  packages = ["xdr3"]
-  revision = "a875e7c9fa2388ce03279f6b5ba1c2ccd1f9e917"
+  digest = "1:da810c779927bfa6eaa939ef14d7657039d75f414a7d6367d96865726074e26a"
+  name = "github.com/getsentry/raven-go"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "a9457d81ec91fa6d538567f14c6138e9ce5a37fb"
 
 [[projects]]
+  digest = "1:a9fe0f8ff72c388d0128e88ce5f3c27d37dcd0950acd7cdb8323555f12463396"
+  name = "github.com/go-chi/chi"
+  packages = [
+    ".",
+    "middleware",
+  ]
+  pruneopts = "UT"
+  revision = "b5294d10673813fac8558e7f47242bc9e61b4c25"
+  version = "v3.3.3"
+
+[[projects]]
+  digest = "1:c73968eeebb707f80e1282948345e5250810e3d3c52348e5d7818090f592f5d2"
+  name = "github.com/go-ozzo/ozzo-validation"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "9d6782aa52aad2ec5f3ea5af63b7dc4bc5192c40"
+  version = "v3.4.0"
+
+[[projects]]
+  digest = "1:a712b5079fa7fd942a077341757265836063980331c0186360d463d61ffa2223"
+  name = "github.com/google/jsonapi"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "46d3ced0434461be12e555852e2f1a9ed382e139"
+  version = "1.0.0"
+
+[[projects]]
+  digest = "1:c0d19ab64b32ce9fe5cf4ddceba78d5bc9807f0016db6b1183599da3dcc24d10"
+  name = "github.com/hashicorp/hcl"
+  packages = [
+    ".",
+    "hcl/ast",
+    "hcl/parser",
+    "hcl/printer",
+    "hcl/scanner",
+    "hcl/strconv",
+    "hcl/token",
+    "json/parser",
+    "json/scanner",
+    "json/token",
+  ]
+  pruneopts = "UT"
+  revision = "8cb6e5b959231cc1119e43259c4a608f9c51a241"
+  version = "v1.0.0"
+
+[[projects]]
+  digest = "1:870d441fe217b8e689d7949fef6e43efbc787e50f200cb1e70dbca9204a1d6be"
+  name = "github.com/inconshreveable/mousetrap"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "76626ae9c91c4f2a10f34cad8ce83ea42c93bb75"
+  version = "v1.0"
+
+[[projects]]
+  digest = "1:c568d7727aa262c32bdf8a3f7db83614f7af0ed661474b24588de635c20024c7"
+  name = "github.com/magiconair/properties"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "c2353362d570a7bfa228149c62842019201cfb71"
+  version = "v1.8.0"
+
+[[projects]]
+  digest = "1:645110e089152bd0f4a011a2648fbb0e4df5977be73ca605781157ac297f50c4"
+  name = "github.com/mitchellh/mapstructure"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "fa473d140ef3c6adf42d6b391fe76707f1f243c8"
+  version = "v1.0.0"
+
+[[projects]]
+  branch = "master"
+  digest = "1:3169196542342e193c4e0bacbaf5039712051f8178b16aaa94a67fd78cde6e2e"
+  name = "github.com/nullstyle/go-xdr"
+  packages = ["xdr3"]
+  pruneopts = "UT"
+  revision = "f4c839f750778158541decf4c318fc7625ec066b"
+
+[[projects]]
+  digest = "1:95741de3af260a92cc5c7f3f3061e85273f5a81b5db20d4bd68da74bd521675e"
+  name = "github.com/pelletier/go-toml"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "c01d1270ff3e442a8a57cddc1c92dc1138598194"
+  version = "v1.2.0"
+
+[[projects]]
+  digest = "1:40e195917a951a8bf867cd05de2a46aaf1806c50cf92eebf4c16f78cd196f747"
   name = "github.com/pkg/errors"
   packages = ["."]
+  pruneopts = "UT"
   revision = "645ef00459ed84a119197bfb8d8205042c6df63d"
   version = "v0.8.0"
 
 [[projects]]
+  digest = "1:d867dfa6751c8d7a435821ad3b736310c2ed68945d05b50fb9d23aee0540c8cc"
   name = "github.com/sirupsen/logrus"
   packages = ["."]
-  revision = "c155da19408a8799da419ed3eeb0cb5db0ad5dbc"
-  version = "v1.0.5"
+  pruneopts = "UT"
+  revision = "3e01752db0189b9157070a0e1668a620f9a85da2"
+  version = "v1.0.6"
 
 [[projects]]
-  name = "github.com/urfave/cli"
-  packages = ["."]
-  revision = "cfb38830724cc34fedffe9a2a29fb54fa9169cd1"
-  version = "v1.20.0"
-
-[[projects]]
-  name = "gitlab.com/distributed_lab/logan"
+  digest = "1:bd1ae00087d17c5a748660b8e89e1043e1e5479d0fea743352cda2f8dd8c4f84"
+  name = "github.com/spf13/afero"
   packages = [
     ".",
-    "v3",
-    "v3/errors",
-    "v3/fields"
+    "mem",
   ]
-  revision = "f4e85a29dac688ce751d0202d6244c229f07dc53"
-  version = "v3.5.1"
+  pruneopts = "UT"
+  revision = "787d034dfe70e44075ccc060d346146ef53270ad"
+  version = "v1.1.1"
 
 [[projects]]
+  digest = "1:516e71bed754268937f57d4ecb190e01958452336fa73dbac880894164e91c1f"
+  name = "github.com/spf13/cast"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "8965335b8c7107321228e3e3702cab9832751bac"
+  version = "v1.2.0"
+
+[[projects]]
+  digest = "1:645cabccbb4fa8aab25a956cbcbdf6a6845ca736b2c64e197ca7cbb9d210b939"
+  name = "github.com/spf13/cobra"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "ef82de70bb3f60c65fb8eebacbb2d122ef517385"
+  version = "v0.0.3"
+
+[[projects]]
+  branch = "master"
+  digest = "1:8a020f916b23ff574845789daee6818daf8d25a4852419aae3f0b12378ba432a"
+  name = "github.com/spf13/jwalterweatherman"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "14d3d4c518341bea657dd8a226f5121c0ff8c9f2"
+
+[[projects]]
+  digest = "1:dab83a1bbc7ad3d7a6ba1a1cc1760f25ac38cdf7d96a5cdd55cd915a4f5ceaf9"
+  name = "github.com/spf13/pflag"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "9a97c102cda95a86cec2345a6f09f55a939babf5"
+  version = "v1.0.2"
+
+[[projects]]
+  digest = "1:4fc8a61287ccfb4286e1ca5ad2ce3b0b301d746053bf44ac38cf34e40ae10372"
+  name = "github.com/spf13/viper"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "907c19d40d9a6c9bb55f040ff4ae45271a4754b9"
+  version = "v1.1.0"
+
+[[projects]]
+  digest = "1:becaee5fe9030faab5d25be5f2a062d8c092b703f54f4aebad41274f4baba714"
+  name = "gitlab.com/distributed_lab/ape"
+  packages = [
+    ".",
+    "problems",
+  ]
+  pruneopts = "UT"
+  revision = "49ef1814b0c696c2ddf55560a7cb12a8b0164e77"
+  version = "v0.3"
+
+[[projects]]
+  digest = "1:3df87a93bc69cac82db717975d6871d56b39a9d136b949f57836aecf79c2c4c4"
+  name = "gitlab.com/distributed_lab/figure"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "4465722a2b24cd44606a0b8d2885077c476302be"
+  version = "v1.3"
+
+[[projects]]
+  digest = "1:bd5973400cb1ae153ff08bbc3feca6a77b4edc0077ce2e566efe57fe14da7195"
+  name = "gitlab.com/distributed_lab/logan"
+  packages = [
+    "v3",
+    "v3/errors",
+    "v3/fields",
+  ]
+  pruneopts = "UT"
+  revision = "4f53d466cf559df110805dd196a7c98637ce9197"
+  version = "v3.7"
+
+[[projects]]
+  branch = "master"
+  digest = "1:2998921d344cfec3acad7d58c8b77ad7d33ddc57376b72c3be81ddce444753f0"
   name = "gitlab.com/tokend/go"
   packages = [
+    "amount",
     "crc16",
     "hash",
     "keypair",
     "network",
+    "resources",
     "signcontrol",
+    "signcontrol/internal/httpsignatures",
     "strkey",
-    "xdr"
+    "xdr",
+    "xdrbuild",
+    "xdrbuild/internal",
   ]
-  revision = "1eaeddcdb855ce102a83ec5411ca1b8e40e22fb6"
+  pruneopts = "UT"
+  revision = "3562f55cd550f80c777c33c6c804a2223f40e0d6"
 
 [[projects]]
   branch = "master"
+  digest = "1:22948bac92fc1ba6503fcd838cccadc1a99dc9243b6b1dfa3b0bdfae791a55b0"
+  name = "gitlab.com/tokend/horizon-connector"
+  packages = [
+    ".",
+    "internal",
+    "internal/account",
+    "internal/asset",
+    "internal/balance",
+    "internal/blob",
+    "internal/document",
+    "internal/errors",
+    "internal/keyvalue",
+    "internal/listener",
+    "internal/operation",
+    "internal/resources",
+    "internal/resources/operations",
+    "internal/responses",
+    "internal/sale",
+    "internal/system",
+    "internal/templates",
+    "internal/transaction",
+    "internal/transactionv2",
+    "internal/user",
+    "internal/wallets",
+    "types",
+  ]
+  pruneopts = "UT"
+  revision = "f2c432d1be325d9f0ed20abe21b962b223faa870"
+
+[[projects]]
+  branch = "master"
+  digest = "1:3ac92eefb87cf608f18270f5f347e2765387c61bf60a95da9de9d2d0549dea59"
+  name = "gitlab.com/tokend/keypair"
+  packages = [
+    ".",
+    "internal",
+    "internal/crc16",
+    "internal/strkey",
+  ]
+  pruneopts = "UT"
+  revision = "c148f15306edac6a1ad994d8b218e8ae61a0b2c1"
+
+[[projects]]
+  branch = "master"
+  digest = "1:1f46746176f88474d240cef7ec757cf0b4f6726ebb5f7d3b75ebff286337a605"
+  name = "gitlab.com/tokend/regources"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "ab2ff9afadec7359bf9e22e9984c4c12e826d394"
+
+[[projects]]
+  branch = "master"
+  digest = "1:583f2f436bab7b59a7bd3e759f1375b06f460760ed1f9235604d143eaab83009"
   name = "golang.org/x/crypto"
-  packages = ["ssh/terminal"]
-  revision = "2d027ae1dddd4694d54f7a8b6cbe78dca8720226"
+  packages = [
+    "ed25519",
+    "ed25519/internal/edwards25519",
+    "ssh/terminal",
+  ]
+  pruneopts = "UT"
+  revision = "614d502a4dac94afa3a6ce146bd1736da82514c6"
 
 [[projects]]
   branch = "master"
+  digest = "1:9c99029818a3d4f53bcfd6c0158ca068aeacfecb29283f82a1f9c79b8d2a7da4"
   name = "golang.org/x/sys"
   packages = [
     "unix",
-    "windows"
+    "windows",
   ]
-  revision = "d0faeb539838e250bd0a9db4182d48d4a1915181"
+  pruneopts = "UT"
+  revision = "d99a578cf41bfccdeaf48b0845c823a4b8b0ad5e"
 
 [[projects]]
+  digest = "1:8029e9743749d4be5bc9f7d42ea1659471767860f0cdc34d37c3111bd308a295"
+  name = "golang.org/x/text"
+  packages = [
+    "internal/gen",
+    "internal/triegen",
+    "internal/ucd",
+    "transform",
+    "unicode/cldr",
+    "unicode/norm",
+  ]
+  pruneopts = "UT"
+  revision = "f21a4dfb5e38f5895301dc265a8def02365cc3d0"
+  version = "v0.3.0"
+
+[[projects]]
+  digest = "1:342378ac4dcb378a5448dd723f0784ae519383532f5e70ade24132c4c8693202"
   name = "gopkg.in/yaml.v2"
   packages = ["."]
+  pruneopts = "UT"
   revision = "5420a8b6744d3b0345ab293f6fcba19c978f1183"
   version = "v2.2.1"
 
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "125afc65704ab9c6c6f8bd8e8634ac2b57ad4e8334b8654847350c51dd0304c9"
+  input-imports = [
+    "github.com/go-chi/chi",
+    "github.com/go-chi/chi/middleware",
+    "github.com/pkg/errors",
+    "github.com/spf13/cast",
+    "github.com/spf13/cobra",
+    "github.com/spf13/viper",
+    "gitlab.com/distributed_lab/ape",
+    "gitlab.com/distributed_lab/ape/problems",
+    "gitlab.com/distributed_lab/figure",
+    "gitlab.com/distributed_lab/logan/v3",
+    "gitlab.com/distributed_lab/logan/v3/errors",
+    "gitlab.com/tokend/go/keypair",
+    "gitlab.com/tokend/go/signcontrol",
+    "gitlab.com/tokend/go/xdr",
+    "gitlab.com/tokend/go/xdrbuild",
+    "gitlab.com/tokend/horizon-connector",
+    "gitlab.com/tokend/keypair",
+  ]
   solver-name = "gps-cdcl"
   solver-version = 1
