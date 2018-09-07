@@ -33,6 +33,7 @@ func NewRouter(signer keypair.Full, horizonURL *url.URL, logger *logan.Entry) (*
 	proxy := helpers.GetProxy(horizonURL)
 
 	r.Patch("/assets/{code}", handlers.UpdateAsset(submitTx, logger))
+	r.Patch("/sales/{id}", handlers.UpdateSaleDetails(submitTx, logger))
 	r.Post("/create_kyc_request", handlers.CreateKYCRequest(submitTx, logger))
 
 	// Proxy all other requests to horizon
