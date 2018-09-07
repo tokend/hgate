@@ -1,6 +1,7 @@
 package helpers
 
 import (
+	"fmt"
 	"net/url"
 
 	"github.com/pkg/errors"
@@ -20,6 +21,8 @@ func GetTxSubmitter(kp keypair.Full, horizonURL *url.URL) (TxSubmitter, error) {
 
 	return func(operation xdrbuild.Operation) (*horizon.SubmitResponseDetails, error) {
 		env, err := builder.Transaction(kp).Op(operation).Sign(kp).Marshal()
+		fmt.Println(kp.Address())
+		fmt.Println(kp.Seed())
 		if err != nil {
 			return nil, errors.Wrap(err, "failed to marshal tx")
 		}

@@ -84,13 +84,9 @@ PATCH http://hgateurl/sales/23
 
 The user can send another request, then Hgate works as a proxy to Horizon.
 
-For example, the user can watch account creation or update entries in the ledger.
+When an account is created, account creation entries are added to the ledger.
 
 ```GET http://hgateurl/ledger_changes```
-
-This endpoint outputs multiple records. The user is interested to find out what records have `created` type in `changes` array and have `type` of entity inside of `created` equal to `account`.
-
-The account can be updated by KYC creation request. In this case the record has `updated` type.
 
 Here is what JSON output with account created and updated entries looks like:
 
@@ -98,15 +94,7 @@ Here is what JSON output with account created and updated entries looks like:
 
 {
   "_links": {
-    "self": {
-      "href": "https://localhost:8844/ledger_changes?order=asc\u0026limit=10\u0026cursor="
-    },
-    "next": {
-      "href": "https://localhost:8844/ledger_changes?order=asc\u0026limit=10\u0026cursor=103079219200"
-    },
-    "prev": {
-      "href": "https://localhost:8844/ledger_changes?order=desc\u0026limit=10\u0026cursor=64424513536"
-    }
+    ...
   },
   "_embedded": {
     "records": [
@@ -149,7 +137,23 @@ Here is what JSON output with account created and updated entries looks like:
             "state": null
           }
         ]
-      },
+      }
+    ]
+  }
+}
+
+```
+
+After the user has been verified, `updated` entry is added to ledger changes.
+
+```json
+
+{
+  "_links": {
+    ...
+  },
+  "_embedded": {
+    "records": [
       {
         "id": "9298604199936",
         "paging_token": "9298604199936",
@@ -189,14 +193,14 @@ Here is what JSON output with account created and updated entries looks like:
             "state": null
           }
         ]
-      },
+      }
     ]
   }
 }
 
 ```
 
-The KYC data of the account can be discovered by the following request.
+To find out KYC data of the account we need get the KYC data blob id,
 
 ```http
 
@@ -208,114 +212,82 @@ GET http://hgateurl/accounts/GC3JVXSDZ4NI4VEKPAWF45C6RAX3QNFSSHP6KABSXJZ57N6LXBH
 
 {
   "_links": {
-    ...
-  },
-  "id": "GC3JVXSDZ4NI4VEKPAWF45C6RAX3QNFSSHP6KABSXJZ57N6LXBHEQ7UB",
-  "account_id": "GC3JVXSDZ4NI4VEKPAWF45C6RAX3QNFSSHP6KABSXJZ57N6LXBHEQ7UB",
-  "is_blocked": false,
-  "block_reasons_i": 0,
-  "block_reasons": [],
-  "account_type_i": 5,
-  "account_type": "AccountTypeNotVerified",
-  "referrer": "",
-  "thresholds": {
-    "low_threshold": 0,
-    "med_threshold": 0,
-    "high_threshold": 0
-  },
-  "balances": [
-    {
-      "balance_id": "BDRZCSIBEOHZ464BA25SGPVA5NZP6YY3FEOAUVDEQ4EAOTIRF4Q5QVJ6",
-      "account_id": "GC3JVXSDZ4NI4VEKPAWF45C6RAX3QNFSSHP6KABSXJZ57N6LXBHEQ7UB",
-      "asset": "USD666",
-      "balance": "0.000000",
-      "locked": "0.000000",
-      "require_review": false
-    }
-  ],
-  "signers": [
-    {
-      "public_key": "GBUXKQEYAEYGL5WUTWFLVJSJE5NJPRBSQFNKEPZIFOCSHJ7NAYXFOTKQ",
-      "weight": 255,
-      "signer_type_i": 1073741823,
-      "signer_types": [
-        ...
-      ],
-      "signer_identity": 0,
-      "signer_name": ""
+    "self": {
+      "href": "https://api.testnet.tokend.org/ledger_changes?order=desc\u0026limit=10\u0026cursor="
     },
-    {
-      "public_key": "GC3JVXSDZ4NI4VEKPAWF45C6RAX3QNFSSHP6KABSXJZ57N6LXBHEQ7UB",
-      "weight": 1,
-      "signer_type_i": 1073741823,
-      "signer_types": [
-        ...
-      ],
-      "signer_identity": 0,
-      "signer_name": ""
+    "next": {
+      "href": "https://api.testnet.tokend.org/ledger_changes?order=desc\u0026limit=10\u0026cursor=8912430801358848"
+    },
+    "prev": {
+      "href": "https://api.testnet.tokend.org/ledger_changes?order=asc\u0026limit=10\u0026cursor=8912430801358848"
     }
-  ],
-  "policies": {
-    "account_policies_type_i": 0,
-    "account_policies_types": null
   },
-  "account_kyc": {
-    "KYCData": {
-      "v2": {
-        "address": {
-          "city": "City",
-          "country": "Afghanistan",
-          "line_1": "l1",
-          "line_2": "l2",
-          "postal_code": "123",
-          "state": "CA"
-        },
-        "date_of_birth": "2018-04-01T00:00:00+03:00",
-        "documents": {
-          "kyc_id_document": {
-            "front": {
-              "key": "dmybeg4inhoebjhcost7fvmjfxxy35wb74dofgigzd45ifafagxm6o22"
+  "_embedded": {
+    "records": [
+      {
+        "id": "8912430801358848",
+        "paging_token": "8912430801358848",
+        "ledger": 2075087,
+        "created_at": "2018-09-07T18:24:19Z",
+        "changes": [
+          {
+            "type_i": 1,
+            "type": "updated",
+            "created": null,
+            "updated": {
+              "last_modified_ledger_seq": 2075087,
+              "type_i": 0,
+              "type": "account",
+              "account": {
+                "account_id": "GB2DIW262PRDTL72NZ3KCTOBE2RCN46Z4KJBKELOKP4YSQJG2S4XCIVG",
+                "account_type_i": 6,
+                "account_type": "AccountTypeSyndicate",
+                "block_reasons_i": 0,
+                "block_reasons": [],
+                "limits": null,
+                "policies": {
+                  "account_policies_type_i": 0,
+                  "account_policies_types": null
+                },
+                "signers": [],
+                "thresholds": {
+                  "low_threshold": 0,
+                  "med_threshold": 0,
+                  "high_threshold": 0
+                }
+              },
+              "asset": null,
+              "balance": null
             },
-            "type": "passport"
-          },
-          "kyc_poa": {
-            "front": {
-              "key": "dmybef4inhoebjhcost7fvmyqilt54okeu45vqa7k3cbkutsba2jrdkk"
-            }
-          },
-          "kyc_selfie": {
-            "front": {
-              "key": "dmybed4inhoebjhcost7fvifzza7z5rr5n3k5tg2ht7plazwkawfbwcu"
-            }
+            "removed": null,
+            "state": null
           }
-        },
-        "first_name": "F",
-        "id_document_type": "passport",
-        "id_expiration_date": "2018-04-30T00:00:00+03:00",
-        "last_name": "L"
-      },
-      "version": "v2"
+        ]
+      }
+    ]
+  }
+}
+
+```
+
+After that, the actual data can be fetched by id via the following request.
+
+```http
+
+GET http://hgateurl/users/GC3JVXSDZ4NI4VEKPAWF45C6RAX3QNFSSHP6KABSXJZ57N6LXBHEQ7UB/blobs/MYWQWOI5QH5FAIW6V5S65I2MV3LO76VMWDFSZ7EVZKO5MUPLKYOA
+
+```
+
+```json
+
+{
+    "data": {
+        "id": "MYWQWOI5QH5FAIW6V5S65I2MV3LO76VMWDFSZ7EVZKO5MUPLKYOA",
+        "type": "kyc_form",
+        "attributes": {
+            "value": "{\"name\":\"John\",\"company\":\"Johny Digital\",\"headquarters\":\"2\",\"industry\":\"SE\",\"found_date\":\"2018-07-28\",\"team_size\":\"2\",\"homepage\":\"johnydigital.com\",\"documents\":{}}"
+        }
     }
-  },
-  "external_system_accounts": [
-    {
-      "type": {
-        "name": "Bitcoin",
-        "value": 1
-      },
-      "data": "1M8LXH3RpbtDTughUYRtEsUNLCWBbQaXk2",
-      "asset_code": "BTC"
-    },
-    {
-      "type": {
-        "name": "Ethereum",
-        "value": 2
-      },
-      "data": "0x3A9D26C7721b2d6a7855F3935A650490F2fadbcb",
-      "asset_code": "ETH"
-    }
-  ],
-  "referrals": []
 }
 
 ```
