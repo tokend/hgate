@@ -9,10 +9,6 @@ required:
   - creator_details
   - trailing_digits_count
 properties:
-  request_id:
-    type: integer
-    format: uint64
-    description: omit if creating new request
   all_tasks:
     type: integer
     format: uint32

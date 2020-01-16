@@ -8,22 +8,17 @@ import (
 	"net/http"
 )
 
-func UpdateAsset(w http.ResponseWriter, r *http.Request) {
+func UpdateAssetUpdateRequest(w http.ResponseWriter, r *http.Request) {
 	log := Log(r)
 
-	request, err := requests.NewUpdateAssetRequest(r)
+	request, err := requests.NewUpdateAssetUpdateRequest(r)
 	if err != nil {
 		ape.RenderErr(w, problems.BadRequest(err)...)
 		return
 	}
-	requestID := uint64(0)
-	if request.RequestId != nil {
-		requestID = *request.RequestId
-	}
 
 	env, err := buildAndSign(r, &xdrbuild.UpdateAsset{
-		RequestID:      requestID,
-		AllTasks:       request.AllTasks,
+		RequestID:      request.RequestID,
 		Code:           request.Code,
 		Policies:       request.Policies,
 		CreatorDetails: request.CreatorDetails,

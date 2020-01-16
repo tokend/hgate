@@ -1,20 +1,16 @@
 package requests
 
 import (
-	"encoding/json"
 	validation "github.com/go-ozzo/ozzo-validation"
 	"github.com/tokend/hgate/resources"
-	"gitlab.com/distributed_lab/logan/v3/errors"
-	"net/http"
 )
 
-type CreateAssetRequest struct {
+type AssetCreationRequest struct {
 	resources.CreateAssetRequest
 }
 
-func (c CreateAssetRequest) Validate() error {
+func (c AssetCreationRequest) Validate() error {
 	errs := validation.Errors{
-		"/data/request_id": validation.Validate(c.RequestId, validation.NilOrNotEmpty),
 		//todo add regular expression matching for asset code
 		"/data/code":                     validation.Validate(c.Code, validation.Length(1, 16)),
 		"/data/type":                     validation.Validate(c.Type, validation.Required),
@@ -27,19 +23,4 @@ func (c CreateAssetRequest) Validate() error {
 	}
 
 	return errs.Filter()
-}
-
-func NewCreateAssetRequest(r *http.Request) (*CreateAssetRequest, error) {
-	var d dummy
-	if err := json.NewDecoder(r.Body).Decode(&d); err != nil {
-		return nil, errors.Wrap(err, "failed to unmarshal")
-	}
-
-	var request CreateAssetRequest
-	if err := json.Unmarshal(d.Data, &request); err != nil {
-		return nil, errors.Wrap(err, "failed to unmarshal request")
-	}
-
-	return &request, request.Validate()
-
 }

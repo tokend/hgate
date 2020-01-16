@@ -11,17 +11,13 @@ import (
 	"net/http"
 )
 
-func ChangeRole(w http.ResponseWriter, r *http.Request) {
+func UpdateChangeRole(w http.ResponseWriter, r *http.Request) {
 	log := Log(r)
 
-	request, err := requests.NewChangeRoleRequest(r)
+	request, err := requests.NewUpdateChangeRoleRequest(r)
 	if err != nil {
 		ape.RenderErr(w, problems.BadRequest(err)...)
 		return
-	}
-	requestID := uint64(0)
-	if request.RequestId != nil {
-		requestID = *request.RequestId
 	}
 
 	kycData := make(map[string]interface{})
@@ -33,11 +29,9 @@ func ChangeRole(w http.ResponseWriter, r *http.Request) {
 	}
 
 	env, err := buildAndSign(r, &xdrbuild.CreateChangeRoleRequest{
-		RequestID:          requestID,
 		DestinationAccount: request.Destination,
 		RoleToSet:          request.AccountRole,
 		KYCData:            kycData,
-		AllTasks:           request.AllTasks,
 	})
 
 	if err != nil {

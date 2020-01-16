@@ -9,7 +9,7 @@ Hgate uses keypair provided in config file to sign and submit transactions into 
 Alternatively, you can provide headers along with your request to sign transaction with specified keys:
 
 * **Tokend-Source** - source of the transaction, account address.
-* **Tokend-Signer** - signer secret key, seed, to sign transaction with.
+* **Tokend-Signers** - slice of signer secret keys (seed) to sign transaction with.
 
 ## Usage
 

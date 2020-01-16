@@ -11,6 +11,4 @@ type ChangeRoleRequest struct {
 	CreatorDetails Details `json:"creator_details"`
 	// ID of account to change roles
 	Destination string `json:"destination"`
-	// omit if creating new request
-	RequestId *uint64 `json:"request_id,omitempty"`
 }

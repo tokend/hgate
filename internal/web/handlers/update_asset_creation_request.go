@@ -8,22 +8,17 @@ import (
 	"net/http"
 )
 
-func CreateAsset(w http.ResponseWriter, r *http.Request) {
+func UpdateAssetCreationRequest(w http.ResponseWriter, r *http.Request) {
 	log := Log(r)
 
-	request, err := requests.NewCreateAssetRequest(r)
+	request, err := requests.NewUpdateAssetCreationRequest(r)
 	if err != nil {
 		ape.RenderErr(w, problems.BadRequest(err)...)
 		return
 	}
 
-	requestID := uint64(0)
-	if request.RequestId != nil {
-		requestID = *request.RequestId
-	}
-
 	env, err := buildAndSign(r, &xdrbuild.CreateAsset{
-		RequestID:                requestID,
+		RequestID:                request.RequestID,
 		Code:                     request.Code,
 		MaxIssuanceAmount:        uint64(request.MaxIssuanceAmount),
 		PreIssuanceSigner:        request.PreIssuanceAssetSigner,
@@ -32,7 +27,6 @@ func CreateAsset(w http.ResponseWriter, r *http.Request) {
 		Policies:                 request.Policies,
 		Type:                     request.Type,
 		CreatorDetails:           request.CreatorDetails,
-		AllTasks:                 request.AllTasks,
 	})
 
 	if err != nil {

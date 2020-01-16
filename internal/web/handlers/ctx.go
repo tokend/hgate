@@ -3,7 +3,6 @@ package handlers
 import (
 	"context"
 	"github.com/tokend/hgate/internal/helpers"
-	"gitlab.com/tokend/connectors/keyer"
 	"gitlab.com/tokend/connectors/submit"
 	oldkeypair "gitlab.com/tokend/go/keypair"
 	"gitlab.com/tokend/go/signcontrol"
@@ -44,14 +43,14 @@ func Builder(r *http.Request) *xdrbuild.Builder {
 	return r.Context().Value(builderCtxKey).(*xdrbuild.Builder)
 }
 
-func CtxKeys(keys keyer.Keys) func(context.Context) context.Context {
+func CtxKeys(keys SigningBundle) func(context.Context) context.Context {
 	return func(ctx context.Context) context.Context {
 		return context.WithValue(ctx, keysCtxKey, keys)
 	}
 }
 
-func Keys(r *http.Request) keyer.Keys {
-	return r.Context().Value(keysCtxKey).(keyer.Keys)
+func Keys(r *http.Request) SigningBundle {
+	return r.Context().Value(keysCtxKey).(SigningBundle)
 }
 
 func CtxSubmitter(transactor *submit.Transactor) func(context.Context) context.Context {

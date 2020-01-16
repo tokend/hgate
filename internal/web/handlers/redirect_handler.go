@@ -14,7 +14,7 @@ func RedirectHandler(w http.ResponseWriter, r *http.Request) {
 		ape.RenderErr(w, problems.InternalError())
 		return
 	}
-	err = signRequest(r, keys.Signer)
+	err = signRequest(r, keys.Signers[0])
 	if err != nil {
 		Log(r).WithError(err).Error("failed to sign request")
 		ape.RenderErr(w, problems.InternalError())
