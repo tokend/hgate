@@ -1,0 +1,25 @@
+type: object
+required:
+  - code
+  - policies
+  - creator_details
+properties:
+  request_id:
+    type: integer
+    format: uint64
+    description: omit if creating new request
+  all_tasks:
+    type: integer
+    format: uint32
+    description: Tasks to create request with
+  code:
+    type: string
+    description: Unique asset identifier
+    example: USD
+  policies:
+    type: integer
+    format: uint32
+    description: Policies specified for the asset
+    example: 12
+  creator_details:
+    $ref: '#/components/schemas/Details'

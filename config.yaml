@@ -1,17 +1,22 @@
-# "log" entry is used to configure logger output
 log:
-  # "level" makes logger output only important messages
-  level: debug # may be "debug", "info", "warn", "error"
+  disable_sentry: true
+  level: info
 
-# "http" entry is responsible for what port should Hgate listen
-http:
-  host: localhost
-  port: 8844
+keys:
+  signer: "S_SOME_SECRET_KEY"
+  source: "G_SOME_PUBLIC_KEY"
 
-# "horizon" entry must contain some valid Horizon API URL
 horizon:
-  url: http://...
+  url: "http://horizon"
 
-# "signer" is a seed of some valid account
-keypair:
-  signer: S...
+client:
+  endpoint: "http://horizon"
+
+submit:
+  endpoint: "http://horizon"
+
+listener:
+  addr: :8181
+
+cop:
+  disabled: true

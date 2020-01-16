@@ -1,9 +1,9 @@
 package keypair
 
 import (
-	"github.com/agl/ed25519"
 	"gitlab.com/tokend/go/strkey"
 	"gitlab.com/tokend/go/xdr"
+	"golang.org/x/crypto/ed25519"
 )
 
 // FromAddress represents a keypair to which only the address is know.  This KP
@@ -33,7 +33,7 @@ func (kp *FromAddress) Verify(input []byte, sig []byte) error {
 	var asig [64]byte
 	copy(asig[:], sig[:])
 
-	if !ed25519.Verify(kp.publicKey(), input, &asig) {
+	if !ed25519.Verify(kp.publicKey()[:], input, asig[:]) {
 		return ErrInvalidSignature
 	}
 	return nil

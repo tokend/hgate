@@ -6,4 +6,5 @@ type Asset struct {
 	AvailableForIssuance Amount       `json:"available_for_issuance"`
 	Details              AssetDetails `json:"details"`
 	Issued               Amount       `json:"issued"`
+	Type                 uint64       `json:"type"`
 }

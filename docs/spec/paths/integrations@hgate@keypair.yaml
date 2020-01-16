@@ -1,0 +1,27 @@
+post:
+  description: Generate keypair
+  tags:
+    - accounts
+  operationId: genKeypair
+  responses:
+    '200':
+      description: Success
+      content:
+        application/vnd.api+json:
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/components/schemas/Keypair'
+    '400':
+      description: invalid request
+      content:
+        application/vnd.api+json:
+          schema:
+            $ref: '#/components/schemas/Errors'
+    '500':
+      description: failed to
+      content:
+        application/vnd.api+json:
+          schema:
+            $ref: '#/components/schemas/Errors'

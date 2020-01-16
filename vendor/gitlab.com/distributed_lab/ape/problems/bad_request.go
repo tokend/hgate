@@ -5,40 +5,55 @@ import (
 	"io"
 	"net/http"
 
-	"github.com/go-ozzo/ozzo-validation"
+	validation "github.com/go-ozzo/ozzo-validation"
 	"github.com/google/jsonapi"
 	"github.com/pkg/errors"
 )
 
+// BadRequester is an error that indicates bad request.
+type BadRequester interface {
+	BadRequest() map[string]error
+}
+
 func BadRequest(err error) []*jsonapi.ErrorObject {
-	errs := []*jsonapi.ErrorObject{}
-	switch reason := errors.Cause(err); reason {
-	case io.EOF:
-		errs = append(errs, &jsonapi.ErrorObject{
-			Title:  http.StatusText(http.StatusBadRequest),
-			Status: fmt.Sprintf("%d", http.StatusBadRequest),
-			Detail: "Request body were expected",
-		})
+	cause := errors.Cause(err)
+	if cause == io.EOF {
+		return []*jsonapi.ErrorObject{
+			{
+				Title:  http.StatusText(http.StatusBadRequest),
+				Status: fmt.Sprintf("%d", http.StatusBadRequest),
+				Detail: "Request body were expected",
+			},
+		}
+	}
+
+	switch cause := cause.(type) {
+	case validation.Errors:
+		return toJsonapiErrors(cause)
+	case BadRequester:
+		return toJsonapiErrors(cause.BadRequest())
 	default:
-		switch terr := reason.(type) {
-		case validation.Errors:
-			for key, value := range terr {
-				errs = append(errs, &jsonapi.ErrorObject{
-					Title:  http.StatusText(http.StatusBadRequest),
-					Status: fmt.Sprintf("%d", http.StatusBadRequest),
-					Meta: &map[string]interface{}{
-						"field": key,
-						"error": value.Error(),
-					},
-				})
-			}
-		default:
-			errs = append(errs, &jsonapi.ErrorObject{
+		return []*jsonapi.ErrorObject{
+			{
 				Title:  http.StatusText(http.StatusBadRequest),
 				Status: fmt.Sprintf("%d", http.StatusBadRequest),
 				Detail: "Your request was invalid in some way",
-			})
+			},
 		}
+	}
+}
+
+func toJsonapiErrors(m map[string]error) []*jsonapi.ErrorObject {
+	errs := make([]*jsonapi.ErrorObject, 0, len(m))
+	for key, value := range m {
+		errs = append(errs, &jsonapi.ErrorObject{
+			Title:  http.StatusText(http.StatusBadRequest),
+			Status: fmt.Sprintf("%d", http.StatusBadRequest),
+			Meta: &map[string]interface{}{
+				"field": key,
+				"error": value.Error(),
+			},
+		})
 	}
 	return errs
 }

@@ -1,0 +1,47 @@
+allOf:
+  - $ref: '#/components/schemas/TransactionKey'
+  - type: object
+    x-go-needs-meta: true
+    required:
+      - attributes
+    properties:
+      attributes:
+        type: object
+        required:
+          - hash
+          - ledger_sequence
+          - created_at
+          - envelope_xdr
+          - result_xdr
+          - result_meta_xdr
+        properties:
+          hash:
+            type: string
+            example: 575a8bad0a67378029c778d92eb5367136e89530830ed8275ff20ac80160a80d
+            description: hash of transaction
+          ledger_sequence:
+            type: integer
+            format: int32
+            example: 4
+            description: sequence of ledger where transaction belongs to
+          created_at:
+            type: string
+            format: time.Time
+            description: close time of ledger where transaction belongs to
+            example: '2019-03-04T18:42:15Z'
+          envelope_xdr:
+            type: string
+            description: base-64 encoded XDR representation of transaction itself
+            example: >-
+              AAAAAEHCX5tmu0fXlkE9GLIOLO185ih5QI7V+PZ1mtb1tnzSA59veKFdUjsAAAAAAAAAAAAAAABchp31A...
+          result_xdr:
+            type: string
+            description: base-64 encoded XDR representation of core response
+            example: AAAAAAAAAAAAAAAAAAAAAQAAAAAAAAALAAAAAAAAAAAAAAABAAAAAQAAAAAAAAAA
+          result_meta_xdr:
+            type: string
+            description: >-
+              base-64 encoded XDR representation of core response's meta
+              information
+            example: >-
+              AAAAAAAAAAEAAAAMAAAAAwAAAAEAAAAaAAAAAAAAAAEAAAABAAAAAAAAAAEAAAACe30AAAAAAAAAAAAAAAAAAwAAAA...

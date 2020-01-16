@@ -1,0 +1,8 @@
+type: object
+required:
+  - public_key
+properties:
+  public_key:
+    type: string
+    example: GBSR6JG5AYSAW7HK6EGJFYVIVN54LVGSY3ZLJ6X3IBQZ766EJABCZQTH
+    description: Public key of the signer

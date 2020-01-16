@@ -1,0 +1,8 @@
+apiTitle: hgate
+splitSpec: true
+codeSamples: false
+swaggerUI: true
+travis: true
+repo: tokend/hgate
+oasVersion: 1.0.0
+

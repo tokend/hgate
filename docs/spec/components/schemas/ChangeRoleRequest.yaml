@@ -1,0 +1,23 @@
+type: object
+required:
+  - destination
+  - account_role
+  - creator_details
+properties:
+  request_id:
+    type: integer
+    format: uint64
+    description: omit if creating new request
+  all_tasks:
+    type: integer
+    format: uint32
+  destination:
+    type: string
+    example: GBSR6JG5AYSAW7HK6EGJFYVIVN54LVGSY3ZLJ6X3IBQZ766EJABCZQTH
+    description: ID of account to change roles
+  account_role:
+    type: integer
+    format: uint64
+    description: ID of the account role to set for destination account
+  creator_details:
+    $ref: '#/components/schemas/Details'

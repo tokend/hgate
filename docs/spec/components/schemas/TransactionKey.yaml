@@ -1,0 +1,9 @@
+type: object
+properties:
+  id:
+    type: string
+    example: '17179869186'
+  type:
+    type: string
+    enum:
+      - transactions

@@ -30,7 +30,7 @@
   version = "0.8.0"
 
 [[constraint]]
-  branch = "master"
+  branch = "feature/payment-optional-src-account"
   name = "gitlab.com/tokend/go"
 
 [prune]

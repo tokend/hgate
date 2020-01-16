@@ -1,0 +1,3 @@
+type: object
+additionalProperties: true
+description: 'Valid JSON of free form to attach details specific to operation, request etc.'
