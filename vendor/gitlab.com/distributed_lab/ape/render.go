@@ -1,6 +1,7 @@
 package ape
 
 import (
+	"encoding/json"
 	"net/http"
 	"strconv"
 
@@ -25,5 +26,8 @@ func RenderErr(w http.ResponseWriter, errs ...*jsonapi.ErrorObject) {
 
 func Render(w http.ResponseWriter, res interface{}) {
 	w.Header().Set("content-type", jsonapi.MediaType)
-	jsonapi.MarshalPayload(w, res)
+	err := json.NewEncoder(w).Encode(res)
+	if err != nil {
+		panic(errors.Wrap(err, "failed to render response"))
+	}
 }

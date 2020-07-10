@@ -21,7 +21,7 @@ It has the following features:
 
 ## Requirements
 
-Go 1.6 or above.
+Go 1.13 or above.
 
 
 ## Getting Started
@@ -36,8 +36,8 @@ or `validation.ValidateStruct()` to validate the value.
 Run the following command to install the package:
 
 ```
-go get github.com/go-ozzo/ozzo-validation
-go get github.com/go-ozzo/ozzo-validation/is
+go get github.com/go-ozzo/ozzo-validation/v3
+go get github.com/go-ozzo/ozzo-validation/v3/is
 ```
 
 ### Validating a Simple Value
@@ -50,8 +50,8 @@ package main
 import (
 	"fmt"
 
-	"github.com/go-ozzo/ozzo-validation"
-	"github.com/go-ozzo/ozzo-validation/is"
+	"github.com/go-ozzo/ozzo-validation/v3"
+	"github.com/go-ozzo/ozzo-validation/v3/is"
 )
 
 func main() {
@@ -87,8 +87,8 @@ import (
 	"fmt"
 	"regexp"
 
-	"github.com/go-ozzo/ozzo-validation"
-	"github.com/go-ozzo/ozzo-validation/is"
+	"github.com/go-ozzo/ozzo-validation/v3"
+	"github.com/go-ozzo/ozzo-validation/v3/is"
 )
 
 type Address struct {
@@ -225,7 +225,12 @@ When `validation.Validate` is used to validate a validatable value, if it does n
 given validation rules, it will further call the value's `Validate()` method. 
 
 Similarly, when `validation.ValidateStruct` is validating a struct field whose type is validatable, it will call 
-the field's `Validate` method after it passes the listed rules. 
+the field's `Validate` method after it passes the listed rules.
+
+> Note: When implementing `validation.Validatable`, do not call `validation.Validate()` to validate the value in its
+> original type because this will cause infinite loops. For example, if you define a new type `MyString` as `string`
+> and implement `validation.Validatable` for `MyString`, within the `Validate()` function you should cast the value 
+> to `string` first before calling `validation.Validate()` to validate it.
 
 In the following example, the `Address` field of `Customer` is validatable because `Address` implements 
 `validation.Validatable`. Therefore, when validating a `Customer` struct with `validation.ValidateStruct`,
@@ -272,10 +277,9 @@ fmt.Println(err)
 Sometimes, you may want to skip the invocation of a type's `Validate` method. To do so, simply associate
 a `validation.Skip` rule with the value being validated.
 
-
 ### Maps/Slices/Arrays of Validatables
 
-When validating a map, slice, or array, whose element type implements the `validation.Validatable` interface,
+When validating an iterable (map, slice, or array), whose element type implements the `validation.Validatable` interface,
 the `validation.Validate` method will call the `Validate` method of every non-nil element.
 The validation errors of the elements will be returned as `validation.Errors` which maps the keys of the
 invalid elements to their corresponding validation errors. For example,
@@ -295,6 +299,39 @@ fmt.Println(err)
 When using `validation.ValidateStruct` to validate a struct, the above validation procedure also applies to those struct 
 fields which are map/slices/arrays of validatables. 
 
+#### Each
+
+An other option is to use the `validation.Each` method.
+This method allows you to define the rules for the iterables within a struct.
+
+```go
+type Customer struct {
+    Name      string
+    Emails    []string
+}
+
+func (c Customer) Validate() error {
+    return validation.ValidateStruct(&c,
+        // Name cannot be empty, and the length must be between 5 and 20.
+		validation.Field(&c.Name, validation.Required, validation.Length(5, 20)),
+		// Emails are optional, but if given must be valid.
+		validation.Field(&c.Emails, validation.Each(is.Email)),
+    )
+}
+
+c := Customer{
+    Name:   "Qiang Xue",
+    Emails: []Email{
+        "valid@example.com",
+        "invalid",
+    },
+}
+
+err := c.Validate()
+fmt.Println(err)
+// Output:
+// Emails: (1: must be a valid email address.).
+```
 
 ### Pointers
 
@@ -395,6 +432,8 @@ The following rules are provided in the `validation` package:
 * `NotNil`: checks if a pointer value is not nil. Non-pointer values are considered valid.
 * `NilOrNotEmpty`: checks if a value is a nil pointer or a non-empty value. This differs from `Required` in that it treats a nil pointer as valid.
 * `Skip`: this is a special rule used to indicate that all rules following it should be skipped (including the nested ones).
+* `MultipleOf`: checks if the value is a multiple of the specified range.
+* `Each(rules ...Rule)`: checks the elements within an iterable (map/slice/array) with other rules.
 
 The `is` sub-package provides a list of commonly used string validation rules that can be used to check if the format
 of a value satisfies certain requirements. Note that these rules only handle strings and byte slices and if a string
@@ -499,6 +538,24 @@ fmt.Println(err)
 // Output: must be abc
 ```
 
+If your validation function takes additional parameters, you can use the following closure trick:
+
+```go
+func stringEquals(str string) validation.RuleFunc {
+	return func(value interface{}) error {
+		s, _ := value.(string)
+        if s != str {
+            return errors.New("unexpected string")
+        }
+        return nil
+    }
+}
+
+err := validation.Validate("xyz", validation.By(stringEquals("abc")))
+fmt.Println(err)
+// Output: unexpected string
+```
+
 
 ### Rule Groups
 
@@ -526,6 +583,38 @@ func (u User) Validate() error {
 
 In the above example, we create a rule group `NameRule` which consists of two validation rules. We then use this rule
 group to validate both `FirstName` and `LastName`.
+
+
+## Context-aware Validation
+
+While most validation rules are self-contained, some rules may depend dynamically on a context. A rule may implement the
+`validation.RuleWithContext` interface to support the so-called context-aware validation.
+ 
+To validate an arbitrary value with a context, call `validation.ValidateWithContext()`. The `context.Conext` parameter 
+will be passed along to those rules that implement `validation.RuleWithContext`.
+
+To validate the fields of a struct with a context, call `validation.ValidateStructWithContext()`. 
+
+You can define a context-aware rule from scratch by implementing both `validation.Rule` and `validation.RuleWithContext`. 
+You can also use `validation.WithContext()` to turn a function into a context-aware rule. For example,
+
+
+```go
+rule := validation.WithContext(func(ctx context.Context, value interface{}) error {
+	if ctx.Value("secret") == value.(string) {
+	    return nil
+	}
+	return errors.New("value incorrect")
+})
+value := "xyz"
+ctx := context.WithValue(context.Background(), "secret", "example")
+err := validation.ValidateWithContext(ctx, value, rule)
+fmt.Println(err)
+// Output: value incorrect
+```
+
+When performing context-aware validation, if a rule does not implement `validation.RuleWithContext`, its
+`validation.Rule` will be used instead.
 
 
 ## Credits

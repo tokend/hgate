@@ -1,6 +1,6 @@
 [[constraint]]
-  branch = "master"
   name = "github.com/getsentry/raven-go"
+  version = "0.2.0"
 
 [[constraint]]
   name = "github.com/go-ozzo/ozzo-validation"
@@ -15,9 +15,17 @@
   version = "0.8.0"
 
 [[constraint]]
+  name = "github.com/dgrijalva/jwt-go"
+  version = "3.2.0"
+
+[[constraint]]
   name = "gitlab.com/distributed_lab/logan"
   version = "3.3.1"
 
 [[constraint]]
   name = "github.com/go-chi/chi"
-  branch = "master"
+  version = "4"
+
+[prune]
+  go-tests = true
+  unused-packages = true

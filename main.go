@@ -1,9 +1,13 @@
 package main
 
 import (
-	"gitlab.com/tokend/hgate/internal/cmd"
+	"os"
+
+	"github.com/tokend/hgate/internal/cli"
 )
 
 func main() {
-	cmd.Execute()
+	if !cli.Run(os.Args) {
+		os.Exit(1)
+	}
 }

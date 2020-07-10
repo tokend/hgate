@@ -3,16 +3,16 @@ package xdr
 // package contains helper struct for xdr enums marshaling
 
 type value struct {
-	Value int32 `json:"int"`
+	Value int32 `json:"value"`
 }
 
 type enum struct {
-	Value  int32  `json:"int"`
-	String string `json:"string"`
+	Value  int32  `json:"value"`
+	String string `json:"name"`
 }
 
 type flag struct {
-	Value int32       `json:"int"`
+	Value int32       `json:"value"`
 	Flags []flagValue `json:"flags"`
 }
 

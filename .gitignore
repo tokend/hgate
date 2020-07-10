@@ -1,7 +1,5 @@
-bin/*
-pkg/*
-vendor/src/*
-vendor/pkg/*
-*.cfg
-*.json
+.vscode/
 .idea/
+config.*.yaml
+docs/node_modules
+docs/web_deploy

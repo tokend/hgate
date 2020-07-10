@@ -1,9 +1,9 @@
 package resources
 
 type Signer struct {
-	AccountID  string `json:"public_key"`
-	Weight     int    `json:"weight"`
-	SignerType int    `json:"signer_type_i"`
-	Identity   int    `json:"signer_identity"`
-	Name       string `json:"signer_name"`
+	PublicKey string `json:"public_key"`
+	AccountID string `json:"account_id"`
+	Weight    int    `json:"weight"`
+	Role      uint64 `json:"role"`
+	Identity  uint32 `json:"signer_identity"`
 }

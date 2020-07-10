@@ -1,0 +1,33 @@
+type: object
+required:
+  - public_key
+  - identity
+  - signer_role
+  - weight
+  - details
+properties:
+  public_key:
+    type: string
+    example: GBSR6JG5AYSAW7HK6EGJFYVIVN54LVGSY3ZLJ6X3IBQZ766EJABCZQTH
+    description: Public key of the signer
+  identity:
+    type: integer
+    format: uint32
+    example: 1
+    description: Identity of the signer
+  weight:
+    type: integer
+    format: uint32
+    example: 250
+    minimum: 1
+    maximum: 1000
+    description: >-
+      weight that signer will have, threshold for all SignerRequirements equals
+      1000
+  signer_role:
+    type: integer
+    format: uint64
+    example: 10
+    description: ID of the role that will be attached to a signer
+  details:
+    $ref: '#/components/schemas/Details'

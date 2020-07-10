@@ -1,6 +1,8 @@
 package regources
 
-import "encoding/json"
+import (
+	"encoding/json"
+)
 
 // Represents Reviewable request
 type ReviewableRequest struct {
@@ -38,21 +40,23 @@ type ReviewableRequestDetails struct {
 	// RequestTypeName  - string representation of request type
 	RequestTypeName string `json:"request_type"`
 
-	AssetCreate            *AssetCreationRequest     `json:"asset_create,omitempty"`
-	AssetUpdate            *AssetUpdateRequest       `json:"asset_update,omitempty"`
-	PreIssuanceCreate      *PreIssuanceRequest       `json:"pre_issuance_create,omitempty"`
-	IssuanceCreate         *IssuanceRequest          `json:"issuance_create,omitempty"`
-	Withdraw               *WithdrawalRequest        `json:"withdraw,omitempty"`
+	AssetCreate            *AssetCreationRequest     `json:"create_asset,omitempty"`
+	AssetUpdate            *AssetUpdateRequest       `json:"update_asset,omitempty"`
+	PreIssuanceCreate      *PreIssuanceRequest       `json:"create_pre_issuance,omitempty"`
+	IssuanceCreate         *IssuanceRequest          `json:"create_issuance,omitempty"`
+	Withdraw               *WithdrawalRequest        `json:"create_withdraw,omitempty"`
 	TwoStepWithdraw        *WithdrawalRequest        `json:"two_step_withdrawal,omitempty"`
 	Sale                   *SaleCreationRequest      `json:"sale,omitempty"`
-	LimitsUpdate           *LimitsUpdateRequest      `json:"limits_update,omitempty"`
-	AMLAlert               *AMLAlertRequest          `json:"aml_alert,omitempty"`
-	KYC                    *UpdateKYCRequest         `json:"update_kyc,omitempty"`
+	LimitsUpdate           *LimitsUpdateRequest      `json:"update_limits,omitempty"`
+	AMLAlert               *AMLAlertRequest          `json:"create_aml_alert,omitempty"`
+	ChangeRole             *ChangeRoleRequest        `json:"change_role,omitempty"`
 	UpdateSaleDetails      *UpdateSaleDetailsRequest `json:"update_sale_details,omitempty"`
 	UpdateSaleEndTime      *UpdateSaleEndTimeRequest `json:"update_sale_end_time,omitempty"`
 	PromotionUpdateRequest *PromotionUpdateRequest   `json:"promotion_update_request,omitempty"`
-	Invoice                *InvoiceRequest           `json:"invoice,omitempty"`
-	Contract               *ContractRequest          `json:"contract,omitempty"`
+	Invoice                *InvoiceRequest           `json:"create_invoice,omitempty"`
+	Contract               *ContractRequest          `json:"manage_contract,omitempty"`
+	AtomicSwapBidCreation  *AtomicSwapBidCreation    `json:"create_atomic_swap_bid,omitempty"`
+	AtomicSwap             *AtomicSwap               `json:"create_atomic_swap,omitempty"`
 }
 
 type AMLAlertRequest struct {
@@ -63,6 +67,7 @@ type AMLAlertRequest struct {
 
 type AssetCreationRequest struct {
 	Code                   string                 `json:"code"`
+	Type                   uint64                 `json:"type"`
 	Policies               []Flag                 `json:"policies"`
 	PreIssuedAssetSigner   string                 `json:"pre_issued_asset_signer"`
 	MaxIssuanceAmount      Amount                 `json:"max_issuance_amount"`
@@ -174,26 +179,24 @@ type SaleQuoteAsset struct {
 	Price      Amount `json:"price"`
 }
 
-type UpdateKYCRequest struct {
-	AccountToUpdateKYC string                 `json:"account_to_update_kyc"`
-	AccountTypeToSet   AccountTypeToSet       `json:"account_type_to_set"`
-	KYCLevel           uint32                 `json:"kyc_level"`
+type ChangeRoleRequest struct {
+	DestinationAccount string                 `json:"destination_account"`
+	AccountRoleToSet   uint64                 `json:"account_role_to_set"`
 	KYCData            map[string]interface{} `json:"kyc_data"`
 	// KYCDataStruct is the data from raw map of KYCData, unmarshalled into typed struct in custom Unmarshal below
-	KYCDataStruct   KYCData                  `json:"-"`
-	AllTasks        uint32                   `json:"all_tasks"`
-	PendingTasks    uint32                   `json:"pending_tasks"`
-	SequenceNumber  uint32                   `json:"sequence_number"`
-	ExternalDetails []map[string]interface{} `json:"external_details"`
+	KYCDataStruct  KYCData `json:"-"`
+	AllTasks       uint32  `json:"all_tasks"`
+	PendingTasks   uint32  `json:"pending_tasks"`
+	SequenceNumber uint32  `json:"sequence_number"`
 }
 
-func (r *UpdateKYCRequest) UnmarshalJSON(data []byte) error {
-	type t UpdateKYCRequest
+func (r *ChangeRoleRequest) UnmarshalJSON(data []byte) error {
+	type t ChangeRoleRequest
 	var tt t
 	if err := json.Unmarshal(data, &tt); err != nil {
 		return err
 	}
-	*r = UpdateKYCRequest(tt)
+	*r = ChangeRoleRequest(tt)
 
 	// marshal map back to json
 	rawKYC, err := json.Marshal(r.KYCData)
@@ -207,11 +210,6 @@ func (r *UpdateKYCRequest) UnmarshalJSON(data []byte) error {
 	}
 
 	return nil
-}
-
-type AccountTypeToSet struct {
-	Int    int    `json:"int"`
-	String string `json:"string"`
 }
 
 type UpdateSaleDetailsRequest struct {
@@ -231,7 +229,23 @@ type WithdrawalRequest struct {
 	PercentFee             Amount                 `json:"percent_fee"`
 	PreConfirmationDetails map[string]interface{} `json:"pre_confirmation_details"`
 	ExternalDetails        map[string]interface{} `json:"external_details"`
-	DestAssetCode          string                 `json:"dest_asset_code"`
-	DestAssetAmount        Amount                 `json:"dest_asset_amount"`
 	ReviewerDetails        map[string]interface{} `json:"reviewer_details"`
+}
+
+type AtomicSwapBidCreation struct {
+	BaseBalance string                 `json:"base_balance"`
+	BaseAmount  Amount                 `json:"base_amount"`
+	Details     map[string]interface{} `json:"details"`
+	QuoteAssets []AssetPrice           `json:"quote_assets"`
+}
+
+type AssetPrice struct {
+	Asset string `json:"asset"`
+	Price Amount `json:"price"`
+}
+
+type AtomicSwap struct {
+	BidID      string `json:"bid_id"`
+	BaseAmount Amount `json:"base_amount"`
+	QuoteAsset string `json:"quote_asset"`
 }

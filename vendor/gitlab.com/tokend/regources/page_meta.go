@@ -9,4 +9,3 @@ type PageMeta struct {
 type LedgerMeta struct {
 	ClosedAt time.Time `json:"closed_at"`
 }
-

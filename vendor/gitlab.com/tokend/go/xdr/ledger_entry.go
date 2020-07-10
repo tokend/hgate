@@ -3,6 +3,7 @@ package xdr
 import "fmt"
 
 // LedgerKey implements the `Keyer` interface
+// Deprecated: LedgerKey is not fully
 func (entry *LedgerEntry) LedgerKey() LedgerKey {
 	var body interface{}
 

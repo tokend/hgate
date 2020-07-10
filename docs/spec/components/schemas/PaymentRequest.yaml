@@ -1,0 +1,38 @@
+type: object
+required:
+  - source_balance
+  - amount
+  - subject
+  - reference
+  - source_fee
+  - destination_fee
+  - source_pay_for_destination
+properties:
+  amount:
+    type: string
+    format: Amount
+    example: '123.123456'
+  reference:
+    type: string
+    description: Reference for the payment
+  subject:
+    type: string
+    example: Dividents
+    description: Subject of the payment
+  destination_account:
+    type: string
+    description: Account address of the receiver
+  destination_balance:
+    type: string
+    description: Receiving balance id
+  source_balance:
+    type: string
+    example: BDLXKLLVS6UIQEDYCZKIC5222GGQLCOTHM4BWXVCBDQMJTUWUFUATV2Q
+  source_fee:
+    $ref: '#/components/schemas/Fee'
+  destination_fee:
+    $ref: '#/components/schemas/Fee'
+  source_pay_for_destination:
+    type: boolean
+    example: false
+    description: Whether source of the payment should pay destination fee

@@ -1,0 +1,37 @@
+post:
+  description: Change account role
+  tags:
+    - accounts
+  operationId: changeRole
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - data
+          properties:
+            data:
+              $ref: '#/components/schemas/ChangeRoleRequest'
+  responses:
+    '200':
+      description: Success
+      content:
+        application/vnd.api+json:
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/components/schemas/Transaction'
+    '400':
+      description: invalid request
+      content:
+        application/vnd.api+json:
+          schema:
+            $ref: '#/components/schemas/Errors'
+    '500':
+      description: failed to
+      content:
+        application/vnd.api+json:
+          schema:
+            $ref: '#/components/schemas/Errors'

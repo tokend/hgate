@@ -1,7 +1,6 @@
 package helpers
 
 import (
-	"fmt"
 	"net/http"
 	"net/http/httputil"
 	"net/url"
@@ -45,7 +44,6 @@ type Proxy func(w http.ResponseWriter, r *http.Request)
 
 func GetProxy(horizonURL *url.URL) Proxy {
 	return func(w http.ResponseWriter, r *http.Request) {
-		fmt.Println(horizonURL.String())
 		NewSingleHostReverseProxy(horizonURL).ServeHTTP(w, r)
 	}
 }

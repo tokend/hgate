@@ -1,0 +1,52 @@
+type: object
+required:
+  - code
+  - type
+  - policies
+  - pre_issuance_asset_signer
+  - max_issuance_amount
+  - initial_preissued_amount
+  - creator_details
+  - trailing_digits_count
+properties:
+  all_tasks:
+    type: integer
+    format: uint32
+    description: Tasks to create request with
+  code:
+    type: string
+    description: Unique asset identifier
+    example: USD
+  type:
+    type: integer
+    format: uint64
+    description: Numeric type of asset
+    example: 1
+  policies:
+    type: integer
+    format: uint32
+    description: Policies specified for the asset creation
+    example: 12
+  pre_issuance_asset_signer:
+    type: string
+    description: Address of an account that performs pre issuance
+    example: GBSR6JG5AYSAW7HK6EGJFYVIVN54LVGSY3ZLJ6X3IBQZ766EJABCZQTH
+  max_issuance_amount:
+    type: string
+    description: Maximal amount to be issued
+    example: '1000.123456'
+    format: Amount
+  initial_preissued_amount:
+    type: string
+    description: Amount to be issued automatically right after the asset creation
+    example: '1000.123456'
+    format: Amount
+  trailing_digits_count:
+    type: integer
+    format: uint32
+    description: Number of digits after point (comma)
+    example: 2
+    maximum: 6
+    minimum: 0
+  creator_details:
+    $ref: '#/components/schemas/Details'

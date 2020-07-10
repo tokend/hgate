@@ -3,7 +3,8 @@ package keypair
 import (
 	"bytes"
 
-	"github.com/agl/ed25519"
+	"golang.org/x/crypto/ed25519"
+
 	"gitlab.com/tokend/go/strkey"
 	"gitlab.com/tokend/go/xdr"
 )
@@ -33,7 +34,7 @@ func (kp *Full) Verify(input []byte, sig []byte) error {
 	var asig [64]byte
 	copy(asig[:], sig[:])
 
-	if !ed25519.Verify(kp.publicKey(), input, &asig) {
+	if !ed25519.Verify(kp.publicKey(), input, asig[:]) {
 		return ErrInvalidSignature
 	}
 	return nil
@@ -56,12 +57,12 @@ func (kp *Full) SignDecorated(input []byte) (xdr.DecoratedSignature, error) {
 	}, nil
 }
 
-func (kp *Full) publicKey() *[32]byte {
+func (kp *Full) publicKey() ed25519.PublicKey {
 	pub, _ := kp.keys()
 	return pub
 }
 
-func (kp *Full) keys() (*[32]byte, *[64]byte) {
+func (kp *Full) keys() (publicKey ed25519.PublicKey, privateKey ed25519.PrivateKey) {
 	reader := bytes.NewReader(kp.rawSeed())
 	pub, priv, err := ed25519.GenerateKey(reader)
 	if err != nil {

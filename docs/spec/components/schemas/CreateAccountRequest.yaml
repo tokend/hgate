@@ -1,0 +1,23 @@
+type: object
+required:
+  - destination
+  - account_role
+  - signers
+properties:
+  destination:
+    type: string
+    example: GBSR6JG5AYSAW7HK6EGJFYVIVN54LVGSY3ZLJ6X3IBQZ766EJABCZQTH
+    description: ID of account to be created
+  referrer:
+    type: string
+    example: GBSR6JG5AYSAW7HK6EGJFYVIVN54LVGSY3ZLJ6X3IBQZ766EJABCZQTH
+    description: ID of an another account that introduced this account into the system
+  account_role:
+    type: integer
+    format: uint64
+    example: 1
+    description: ID of the role that will be attached to an account
+  signers:
+    type: array
+    items:
+      $ref: '#/components/schemas/SignerData'

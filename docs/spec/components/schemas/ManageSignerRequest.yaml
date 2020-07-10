@@ -1,0 +1,14 @@
+type: object
+required:
+  - action
+properties:
+  action:
+    type: integer
+    description: |
+      * 0 - create
+      * 1 - update
+      * 2 - remove
+  signer_data:
+    $ref: '#/components/schemas/SignerData'
+  remove_signer_data:
+    $ref: '#/components/schemas/RemoveSignerData'
