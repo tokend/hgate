@@ -1,0 +1,24 @@
+services:
+  - docker:dind
+
+stages:
+  - pages
+
+pages:
+  image: node:8
+  stage: pages
+  tags:
+    - tokend
+  only:
+    refs:
+      - master
+    changes:
+      - docs/**/*
+  script:
+    - cd docs
+    - npm install
+    - mkdir -p ../public
+    - npm run release-build
+  artifacts:
+    paths:
+      - public

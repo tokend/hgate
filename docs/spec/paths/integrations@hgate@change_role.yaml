@@ -2,7 +2,7 @@ post:
   description: Change account role
   tags:
     - accounts
-  operationId: changeRole
+  operationId: changeAccountRole
   requestBody:
     content:
       application/json:
