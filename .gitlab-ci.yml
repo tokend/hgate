@@ -1,8 +1,25 @@
 services:
   - docker:dind
 
+variables:
+  IMAGE_NAME: registry.gitlab.com/tokend/hgate:$CI_COMMIT_SHA
+  DH_IMAGE_NAME: tokend/hgate
+
 stages:
+  - build
   - pages
+  - publish
+
+# build & publish docker image to the registry
+build:
+  image: docker:latest
+  stage: build
+  tags:
+    - tokend
+  script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - docker build --pull -t $IMAGE_NAME .
+    - docker push $IMAGE_NAME
 
 pages:
   image: node:8
@@ -22,3 +39,18 @@ pages:
   artifacts:
     paths:
       - public
+
+publish:
+  image: docker:latest
+  stage: publish
+  tags:
+    - tokend
+  only:
+    - /^\d+\.\d+\.\d+.*$/
+  script:
+    - RELEASE=$CI_COMMIT_REF_NAME
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PWD
+    - docker pull $IMAGE_NAME
+    - docker tag $IMAGE_NAME $DH_IMAGE_NAME:$RELEASE
+    - docker push $DH_IMAGE_NAME:$RELEASE
